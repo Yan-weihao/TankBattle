@@ -6,6 +6,9 @@ import java.awt.event.WindowEvent;
 
 public class TankClients extends Frame {
 
+    final static int WINDOW_WIDTH = 800;
+    final static int WINDOW_HEIGHT = 600;
+
     int x = 50 , y = 50 ;
     Image offScreenImage = null;
 
@@ -20,12 +23,12 @@ public class TankClients extends Frame {
     @Override
     public void update(Graphics g) {
         if(offScreenImage == null){
-            offScreenImage = this.createImage(800,600);
+            offScreenImage = this.createImage(WINDOW_WIDTH,WINDOW_HEIGHT);
         }
         Graphics goffsreen = offScreenImage.getGraphics(); //拿到画笔
         Color c = goffsreen.getColor();
         goffsreen.setColor(Color.green);
-        goffsreen.fillRect(0,0,800,600);
+        goffsreen.fillRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
         goffsreen.setColor(c);
         paint(goffsreen);
         g.drawImage(offScreenImage,0,0,null);//绘制指定图像
@@ -53,7 +56,7 @@ public class TankClients extends Frame {
     }
     public void ShowWindow(){
         this.setLocation(400,300);//相对于原地的位置
-        this.setSize(800,600);
+        this.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         this.setTitle("TankBattle");
         this.setBackground(Color.green);
         setVisible(true); //显示窗口
@@ -69,7 +72,5 @@ public class TankClients extends Frame {
             }
         });
     }
-
-
 
 }
