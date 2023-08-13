@@ -1,6 +1,8 @@
 package TankClient;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,7 +19,6 @@ public class TankClients extends Frame {
         Color c = g.getColor();
         g.setColor(Color.RED);
         g.fillOval(x,y,40,40);
-        y += 30;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class TankClients extends Frame {
     }
 
     public class PaintTherad implements Runnable{
-
+        //创建一个线程进行重画
         @Override
         public void run() {
             while (true){
@@ -45,6 +46,26 @@ public class TankClients extends Frame {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+    public class KeyMonitor extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            switch (key){
+                case KeyEvent.VK_LEFT :
+                    x-=5;
+                    break;
+                case KeyEvent.VK_UP:
+                    y-=5;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    x+=5;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    y+=5;
+                    break;
             }
         }
     }
@@ -59,6 +80,7 @@ public class TankClients extends Frame {
         this.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         this.setTitle("TankBattle");
         this.setBackground(Color.green);
+        this.addKeyListener(new KeyMonitor());//添加一个键盘监听
         setVisible(true); //显示窗口
         setResizable(false);//是否可以由用户调节窗口
         new Thread(new PaintTherad()).start();//启动线程
