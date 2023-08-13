@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 public class TankClients extends Frame {
 
     int x = 50 , y = 50 ;
+    Image offScreenImage = null;
 
     @Override
     public void paint(Graphics g) {
@@ -15,6 +16,21 @@ public class TankClients extends Frame {
         g.fillOval(x,y,40,40);
         y += 30;
     }
+
+    @Override
+    public void update(Graphics g) {
+        if(offScreenImage == null){
+            offScreenImage = this.createImage(800,600);
+        }
+        Graphics goffsreen = offScreenImage.getGraphics(); //拿到画笔
+        Color c = goffsreen.getColor();
+        goffsreen.setColor(Color.green);
+        goffsreen.fillRect(0,0,800,600);
+        goffsreen.setColor(c);
+        paint(goffsreen);
+        g.drawImage(offScreenImage,0,0,null);//绘制指定图像
+    }
+
     public class PaintTherad implements Runnable{
 
         @Override
