@@ -10,15 +10,13 @@ public class TankClients extends Frame {
 
     final static int WINDOW_WIDTH = 800;
     final static int WINDOW_HEIGHT = 600;
+    Tanks mytanks = new Tanks(50 , 50);
 
-    int x = 50 , y = 50 ;
     Image offScreenImage = null;
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x,y,40,40);
+      mytanks.draw(g);
     }
 
     @Override
@@ -52,21 +50,7 @@ public class TankClients extends Frame {
     public class KeyMonitor extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            switch (key){
-                case KeyEvent.VK_LEFT :
-                    x-=5;
-                    break;
-                case KeyEvent.VK_UP:
-                    y-=5;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    x+=5;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    y+=5;
-                    break;
-            }
+            mytanks.KeyPressed(e);
         }
     }
 
