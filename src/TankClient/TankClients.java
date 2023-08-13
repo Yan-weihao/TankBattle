@@ -5,6 +5,31 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankClients extends Frame {
+
+    int x = 50 , y = 50 ;
+
+    @Override
+    public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.RED);
+        g.fillOval(x,y,40,40);
+        y += 30;
+    }
+    public class PaintTherad implements Runnable{
+
+        @Override
+        public void run() {
+            while (true){
+                repaint();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         TankClients  t = new TankClients();
         t.ShowWindow();
@@ -17,6 +42,7 @@ public class TankClients extends Frame {
         this.setBackground(Color.green);
         setVisible(true); //显示窗口
         setResizable(false);//是否可以由用户调节窗口
+        new Thread(new PaintTherad()).start();//启动线程
     }
 
     public void OffWindow(){
@@ -28,10 +54,6 @@ public class TankClients extends Frame {
         });
     }
 
-    @Override
-    public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(30,30,40,40);
-    }
+
+
 }
