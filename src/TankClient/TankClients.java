@@ -15,6 +15,7 @@ public class TankClients extends Frame {
     public final static int WINDOW_HEIGHT = 600;
     Tanks mytanks = new Tanks(50 , 50 , true,this);
     Tanks nemetanks = new Tanks(100,50,false,this);
+    Explode explodes = new Explode(400,400,this);
     Missile mymissile ;
     List<Missile> missiles = new ArrayList<>();
     Image offScreenImage = null;
@@ -27,6 +28,7 @@ public class TankClients extends Frame {
             m.hitTank(nemetanks);
             m.draw(g);
         }
+        explodes.draw(g);
         nemetanks.draw(g);
         mytanks.draw(g);
     }

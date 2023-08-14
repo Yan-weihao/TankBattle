@@ -19,6 +19,9 @@ public class Tanks {
     public boolean isTankLive() {
         return tankLive;
     }
+    public void setTankLive(boolean tankLive) {
+        this.tankLive = tankLive;
+    }
 
     private boolean tankLive = true;
 
@@ -138,9 +141,5 @@ public class Tanks {
     public Rectangle getRec(){ //
         return new Rectangle(x,y,WIDTH,HEIGHT);
     }
-    public void setTankLive(boolean tankLive) {
-        this.tankLive = tankLive;
-    }
-
 
 }
