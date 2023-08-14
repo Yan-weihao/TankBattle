@@ -15,6 +15,7 @@ public class Explode {
     }
     public void draw(Graphics g){
         if(!explodeLive){
+            tc.explodes.remove(this);
             return;
         }
         if (step == diameter.length){

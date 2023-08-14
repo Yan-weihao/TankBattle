@@ -25,8 +25,10 @@ public class Missile {
     public void draw(Graphics g){ //画出炮弹
         if (!live){
             tc.missiles.remove(this);
+
             return;
         }
+
         Color c = g.getColor();
         g.setColor(Color.black);
         g.fillOval(x,y,WIDTH,HEIGHT);
@@ -68,6 +70,7 @@ public class Missile {
         if (this.getRec().intersects(tk.getRec()) && tk.isTankLive() ){
              tk.setTankLive(false);
              this.live =false;
+             tc.explodes.add(new Explode(x,y,tc));
              return true;
         }
         return false;
