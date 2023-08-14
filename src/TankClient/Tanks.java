@@ -85,15 +85,14 @@ public class Tanks {
             case KeyEvent.VK_RIGHT -> bR = true;
             case KeyEvent.VK_DOWN -> bD = true;
         }
-
         locateDirection();
     }
 
 
-    public void keyReleased(KeyEvent e){
+    public void keyReleased(KeyEvent e){ //抬起键盘回复
         int key = e.getKeyCode();
         switch (key) {
-            case KeyEvent.VK_CONTROL -> tc.mymissile = fire();
+            case KeyEvent.VK_CONTROL ->  fire();
             case KeyEvent.VK_LEFT -> bL =false;
             case KeyEvent.VK_UP -> bU = false;
             case KeyEvent.VK_RIGHT -> bR = false;
@@ -112,12 +111,12 @@ public class Tanks {
         else if (bL && !bU && !bR && bD)  dir = direction.LD;
         else if (!bL && !bU && !bR && !bD)  dir = direction.STOP;
     }
-    public Missile fire(){
+    public void fire(){
         int x = this.x + Tanks.WIDTH/2 -Missile.WIDTH/2;
         int y = this.y + Tanks.HEIGHT/2 - Missile.HEIGHT/2 ;
         Missile m;
         m = new Missile(x,y,ptDir);
-        return m;
+        tc.missiles.add(m);
     }
 
 }
