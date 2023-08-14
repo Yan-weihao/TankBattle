@@ -74,7 +74,10 @@ public class Tanks {
         if(this.dir != direction.STOP){
             this.ptDir = this.dir;
         }
-
+        if (x < 5) x = 5;
+        if (y < 30) y =30;
+        if (x > TankClients.WINDOW_WIDTH - Tanks.WIDTH ) x = TankClients.WINDOW_WIDTH - Tanks.WIDTH;
+        if (y > TankClients.WINDOW_HEIGHT - Tanks.HEIGHT ) y = TankClients.WINDOW_HEIGHT - Tanks.HEIGHT;
     }
 
     public void KeyPressed(KeyEvent e){ //通过键盘控制坦克方向
