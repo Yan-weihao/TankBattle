@@ -28,7 +28,7 @@ public class TankClients extends Frame {
         }
         Graphics goffsreen = offScreenImage.getGraphics(); //拿到画笔
         Color c = goffsreen.getColor();
-        goffsreen.setColor(Color.green);
+        goffsreen.setColor(Color.LIGHT_GRAY);
         goffsreen.fillRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
         goffsreen.setColor(c);
         paint(goffsreen);

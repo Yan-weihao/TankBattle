@@ -12,6 +12,7 @@ public class Tanks {
     boolean bL = false,bU = false,bR = false,bD = false;
     public enum direction {L,LU,U,RU,R,RD,D,LD,STOP}
     public direction dir = direction.STOP;
+    public direction ptDir = direction.D;
 
     TankClients tc ;
 
@@ -28,7 +29,21 @@ public class Tanks {
         Color c = g.getColor();
         g.setColor(Color.RED);
         g.fillOval(x,y,WIDTH,HEIGHT);
+        g.setColor(c);
+        ptDraw(g);
         move();
+    }
+    public void ptDraw(Graphics g){
+        switch (ptDir){
+            case L -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x,y+Tanks.HEIGHT/2) ;
+            case LU -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x,y);
+            case U -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x+Tanks.WIDTH/2,y);
+            case RU -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x+Tanks.WIDTH,y);
+            case R -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x+Tanks.WIDTH,y+Tanks.HEIGHT/2);
+            case RD -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x+Tanks.WIDTH,y+Tanks.HEIGHT);
+            case D -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x+Tanks.WIDTH/2,y+Tanks.HEIGHT);
+            case LD -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x,y+Tanks.HEIGHT);
+        }
     }
 
     public void move(){//移动
@@ -55,6 +70,9 @@ public class Tanks {
             }
             case STOP -> {
             }
+        }
+        if(this.dir != direction.STOP){
+            this.ptDir = this.dir;
         }
 
     }
@@ -98,7 +116,7 @@ public class Tanks {
         int x = this.x + Tanks.WIDTH/2 -Missile.WIDTH/2;
         int y = this.y + Tanks.HEIGHT/2 - Missile.HEIGHT/2 ;
         Missile m;
-        m = new Missile(x,y,dir);
+        m = new Missile(x,y,ptDir);
         return m;
     }
 
