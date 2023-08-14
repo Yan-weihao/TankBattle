@@ -14,7 +14,13 @@ public class Tanks {
     public direction dir = direction.STOP;
     public direction ptDir = direction.D;
 
-    private boolean good = true;
+    private boolean good = true;//敌我识别
+
+    public boolean isTankLive() {
+        return tankLive;
+    }
+
+    private boolean tankLive = true;
 
     TankClients tc ;
 
@@ -29,6 +35,7 @@ public class Tanks {
     }
 
     public void draw(Graphics g){ //画出一辆坦克
+        if(!tankLive) return;
         Color c = g.getColor();
         if (good){
             g.setColor(Color.RED);
@@ -121,12 +128,19 @@ public class Tanks {
         else if (bL && !bU && !bR && bD)  dir = direction.LD;
         else if (!bL && !bU && !bR && !bD)  dir = direction.STOP;
     }
-    public void fire(){
+    public void fire(){ //发射炮弹
         int x = this.x + Tanks.WIDTH/2 -Missile.WIDTH/2;
         int y = this.y + Tanks.HEIGHT/2 - Missile.HEIGHT/2 ;
         Missile m;
         m = new Missile(x,y,ptDir,this.tc);
         tc.missiles.add(m);
     }
+    public Rectangle getRec(){ //
+        return new Rectangle(x,y,WIDTH,HEIGHT);
+    }
+    public void setTankLive(boolean tankLive) {
+        this.tankLive = tankLive;
+    }
+
 
 }
