@@ -11,12 +11,14 @@ public class TankClients extends Frame {
     final static int WINDOW_WIDTH = 800;
     final static int WINDOW_HEIGHT = 600;
     Tanks mytanks = new Tanks(50 , 50);
+    Missile mymissile = new Missile(50,50, Tanks.direction.R);
 
     Image offScreenImage = null;
 
     @Override
     public void paint(Graphics g) {
       mytanks.draw(g);
+      mymissile.draw(g);
     }
 
     @Override

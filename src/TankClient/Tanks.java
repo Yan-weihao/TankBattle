@@ -22,7 +22,7 @@ public class Tanks {
         move();
     }
 
-    public void move(){
+    public void move(){//移动
         switch (dir) {
             case L -> x -= DISPLACEMENT;
             case LU -> {
@@ -73,7 +73,7 @@ public class Tanks {
         }
         locateDirection();
     }
-    public void locateDirection (){
+    public void locateDirection (){ //确定方向
         if (bL && !bU && !bR && !bD)  dir = direction.L;
         else if (bL && bU && !bR && !bD)  dir = direction.LU;
         else if (!bL && bU && !bR && !bD)  dir = direction.U;
