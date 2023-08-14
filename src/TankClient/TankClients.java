@@ -1,5 +1,6 @@
 package TankClient;
 
+import javax.swing.plaf.SplitPaneUI;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,8 +11,8 @@ import java.util.List;
 
 public class TankClients extends Frame {
 
-    final static int WINDOW_WIDTH = 800;
-    final static int WINDOW_HEIGHT = 600;
+    public final static int WINDOW_WIDTH = 800;
+    public final static int WINDOW_HEIGHT = 600;
     Tanks mytanks = new Tanks(50 , 50 , this);
     Missile mymissile ;
     List<Missile> missiles = new ArrayList<>();
