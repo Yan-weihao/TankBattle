@@ -1,6 +1,7 @@
 package TankClient;
 
 import java.awt.*;
+import java.util.List;
 
 public class Missile {
     public static final int DISPLACEMENT = 10 ;
@@ -25,7 +26,6 @@ public class Missile {
     public void draw(Graphics g){ //画出炮弹
         if (!live){
             tc.missiles.remove(this);
-
             return;
         }
 
@@ -66,12 +66,21 @@ public class Missile {
 
     }
 
-    public boolean hitTank(Tanks tk){
+    public boolean hitTank(Tanks tk){ //打中坦克
         if (this.getRec().intersects(tk.getRec()) && tk.isTankLive() ){
              tk.setTankLive(false);
              this.live =false;
-             tc.explodes.add(new Explode(x,y,tc));
+             tc.explodes.add(new Explode(x,y,tc));//爆炸模拟位置
              return true;
+        }
+        return false;
+    }
+
+    public boolean hitTanks(List<Tanks> tk){
+        for (int i = 0; i < tk.size(); i++) {
+            if (hitTank(tk.get(i))){
+                return true;
+            }
         }
         return false;
     }

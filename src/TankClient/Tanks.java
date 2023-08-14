@@ -38,7 +38,10 @@ public class Tanks {
     }
 
     public void draw(Graphics g){ //画出一辆坦克
-        if(!tankLive) return;
+        if(!tankLive) {
+            tc.nemetanks.remove(this);
+            return;
+        }
         Color c = g.getColor();
         if (good){
             g.setColor(Color.RED);
