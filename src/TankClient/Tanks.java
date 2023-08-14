@@ -1,24 +1,33 @@
 package TankClient;
 
+import javax.swing.plaf.PanelUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Tanks {
     int x , y ;
     public static final int DISPLACEMENT = 5; //坦克位移量
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 50;
     boolean bL = false,bU = false,bR = false,bD = false;
     public enum direction {L,LU,U,RU,R,RD,D,LD,STOP}
     public direction dir = direction.STOP;
+
+    TankClients tc ;
 
     public Tanks(int x, int y) {
         this.x = x;
         this.y = y;
     }
+    public Tanks(int x ,int y,TankClients tc){ //持有TC的引用
+        this(x, y);
+        this.tc = tc;
+    }
 
     public void draw(Graphics g){ //画出一辆坦克
         Color c = g.getColor();
         g.setColor(Color.RED);
-        g.fillOval(x,y,40,40);
+        g.fillOval(x,y,WIDTH,HEIGHT);
         move();
     }
 
@@ -66,6 +75,7 @@ public class Tanks {
     public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
         switch (key) {
+            case KeyEvent.VK_CONTROL -> tc.mymissile = fire();
             case KeyEvent.VK_LEFT -> bL =false;
             case KeyEvent.VK_UP -> bU = false;
             case KeyEvent.VK_RIGHT -> bR = false;
@@ -83,6 +93,13 @@ public class Tanks {
         else if (!bL && !bU && !bR && bD)  dir = direction.D;
         else if (bL && !bU && !bR && bD)  dir = direction.LD;
         else if (!bL && !bU && !bR && !bD)  dir = direction.STOP;
+    }
+    public Missile fire(){
+        int x = this.x + Tanks.WIDTH/2 -Missile.WIDTH/2;
+        int y = this.y + Tanks.HEIGHT/2 - Missile.HEIGHT/2 ;
+        Missile m;
+        m = new Missile(x,y,dir);
+        return m;
     }
 
 }
