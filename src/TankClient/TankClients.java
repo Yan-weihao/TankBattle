@@ -33,7 +33,7 @@ public class TankClients extends Frame {
         g.drawImage(offScreenImage,0,0,null);//绘制指定图像
     }
 
-    public class PaintTherad implements Runnable{
+    public class PaintThread implements Runnable{
         //创建一个线程进行重画
         @Override
         public void run() {
@@ -47,10 +47,14 @@ public class TankClients extends Frame {
             }
         }
     }
-    public class KeyMonitor extends KeyAdapter{
+    public class KeyMonitor extends KeyAdapter{ //监听键盘的事件
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void keyPressed(KeyEvent e) {//按下
             mytanks.KeyPressed(e);
+        }
+        @Override
+        public void keyReleased(KeyEvent e) {//释放
+            mytanks.keyReleased(e);
         }
     }
 
@@ -67,7 +71,7 @@ public class TankClients extends Frame {
         this.addKeyListener(new KeyMonitor());//添加一个键盘监听
         setVisible(true); //显示窗口
         setResizable(false);//是否可以由用户调节窗口
-        new Thread(new PaintTherad()).start();//启动线程
+        new Thread(new PaintThread()).start();//启动线程
     }
 
     public void OffWindow(){
