@@ -13,7 +13,8 @@ public class TankClients extends Frame {
 
     public final static int WINDOW_WIDTH = 800;
     public final static int WINDOW_HEIGHT = 600;
-    Tanks mytanks = new Tanks(50 , 50 , this);
+    Tanks mytanks = new Tanks(50 , 50 , true,this);
+    Tanks nemetanks = new Tanks(100,50,false,this);
     Missile mymissile ;
     List<Missile> missiles = new ArrayList<>();
     Image offScreenImage = null;
@@ -25,6 +26,7 @@ public class TankClients extends Frame {
             Missile m = missiles.get(i);
             m.draw(g);
         }
+        nemetanks.draw(g);
         mytanks.draw(g);
     }
 

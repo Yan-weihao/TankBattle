@@ -14,20 +14,27 @@ public class Tanks {
     public direction dir = direction.STOP;
     public direction ptDir = direction.D;
 
+    private boolean good = true;
+
     TankClients tc ;
 
-    public Tanks(int x, int y) {
+    public Tanks(int x, int y, boolean good) {
         this.x = x;
         this.y = y;
+        this.good = good;
     }
-    public Tanks(int x ,int y,TankClients tc){ //持有TC的引用
-        this(x, y);
+    public Tanks(int x ,int y,boolean good,TankClients tc){ //持有TC的引用
+        this(x, y,good);
         this.tc = tc;
     }
 
     public void draw(Graphics g){ //画出一辆坦克
         Color c = g.getColor();
-        g.setColor(Color.RED);
+        if (good){
+            g.setColor(Color.RED);
+        }else {
+            g.setColor(Color.BLUE);
+        }
         g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
         ptDraw(g);
