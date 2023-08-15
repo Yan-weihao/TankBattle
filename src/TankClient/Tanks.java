@@ -72,9 +72,22 @@ public class Tanks {
             g.setColor(Color.BLUE);
         }
         g.fillOval(x,y,WIDTH,HEIGHT);
+        if (good){
+            g.drawRect(x,y- 5 ,WIDTH,5);
+            lifebar(x,y,WIDTH,5,life,g);
+        }
         g.setColor(c);
         ptDraw(g);
         move();
+    }
+    public void lifebar(int x ,int y , int w , int h,int life,Graphics g){
+        switch (life){
+            case 20 -> g.fillRect(x,y-5,w-40,h);
+            case 40 -> g.fillRect(x,y-5,w-30,h);
+            case 60 -> g.fillRect(x,y-5,w-20,h);
+            case 80 -> g.fillRect(x,y-5,w-10,h);
+            case 100 -> g.fillRect(x,y-5,w,h);
+        }
     }
     public void ptDraw(Graphics g){ //炮筒
         switch (ptDir){
