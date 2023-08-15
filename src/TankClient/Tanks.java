@@ -174,10 +174,13 @@ public class Tanks {
         int key = e.getKeyCode();
         switch (key) {
             case KeyEvent.VK_CONTROL ->  fire();
+            case KeyEvent.VK_U -> resurgence();
             case KeyEvent.VK_LEFT -> bL =false;
             case KeyEvent.VK_UP -> bU = false;
             case KeyEvent.VK_RIGHT -> bR = false;
             case KeyEvent.VK_DOWN -> bD = false;
+
+
         }
         locateDirection();
     }
@@ -239,6 +242,12 @@ public class Tanks {
         }
         return false;
     }
-
-
+    public void resurgence(){
+        if (good){
+            if (!tankLive){
+                tankLive = true;
+                life = 100;
+            }
+        }
+    }
 }
