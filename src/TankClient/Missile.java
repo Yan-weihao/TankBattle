@@ -10,10 +10,11 @@ public class Missile {
 
     private boolean live = true;
     private boolean good ;
-
     int x , y ;
     Tanks.direction dir;
     TankClients tc;
+
+
     public Missile(int x , int y ,Tanks.direction dir){
         this.x = x;
         this.y = y;
@@ -67,14 +68,21 @@ public class Missile {
 
     public boolean hitTank(Tanks tk){ //打中坦克
         if (this.live && this.getRec().intersects(tk.getRec()) && tk.isTankLive() && (tk.isGood() != good)){
-             tk.setTankLive(false);
+            if (tk.isGood()){
+                tk.setLife(tk.getLife()-20);
+                if (tk.getLife() <= 0){
+                    tk.setTankLive(false);
+                    tc.explodes.add(new Explode(x,y,tc));//爆炸模拟位置
+                }
+            }else {
+                tk.setTankLive(false);
+                tc.explodes.add(new Explode(x,y,tc));//爆炸模拟位置
+            }
              this.live =false;
-             tc.explodes.add(new Explode(x,y,tc));//爆炸模拟位置
              return true;
         }
         return false;
     }
-
     public boolean hitTanks(List<Tanks> tk){
         for (int i = 0; i < tk.size(); i++) {
             if (hitTank(tk.get(i))){
