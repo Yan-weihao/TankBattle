@@ -85,7 +85,7 @@ public class Missile {
     }
 
     public boolean hitWall(Wall w){
-        if (this.live &&this.getRec().intersects(w.getRec()) ){
+        if (this.live && this.getRec().intersects(w.getRec()) ){
             this.live = false;
             return true;
         }

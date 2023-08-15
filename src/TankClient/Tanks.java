@@ -3,10 +3,12 @@ package TankClient;
 import javax.swing.plaf.PanelUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 
 public class Tanks {
     int x , y ;
+    int xold , yold;
     public static final int DISPLACEMENT = 5; //坦克位移量
     public static final int WIDTH = 50;
     public static final int HEIGHT = 50;
@@ -36,6 +38,8 @@ public class Tanks {
     public Tanks(int x, int y, boolean good) {
         this.x = x;
         this.y = y;
+        this.xold = x;
+        this.yold = y;
         this.good = good;
     }
     public Tanks(int x ,int y,boolean good,direction dir, TankClients tc){ //持有TC的引用
@@ -76,6 +80,8 @@ public class Tanks {
     }
 
     public void move(){//移动
+        xold = x;
+        yold = y;
         switch (dir) {
             case L -> x -= DISPLACEMENT;
             case LU -> {
@@ -123,6 +129,11 @@ public class Tanks {
         }
     }
 
+    public void stay (){
+        x = xold;
+        y = yold;
+    }
+
     public void KeyPressed(KeyEvent e){ //通过键盘控制坦克方向
         int key = e.getKeyCode();
         switch (key) {
@@ -166,15 +177,26 @@ public class Tanks {
         m = new Missile(x,y,ptDir,this.good,this.tc);
         tc.missiles.add(m);
     }
-    public Rectangle getRec(){ //
+    public Rectangle getRec(){ //碰撞
         return new Rectangle(x,y,WIDTH,HEIGHT);
     }
     public boolean colliedessWithWall(Wall w){ //坦克撞墙
         if (this.tankLive && this.getRec().intersects(w.getRec())){
-            direction [] dirs = direction.values();
-            this.dir = dirs[rn.nextInt(dirs.length)];
+            stay();
             return true;
         }
         return false;
     }
+
+    public boolean colliedesTanks(List<Tanks> tk){ //坦克相撞
+        for (int i = 0; i < tk.size(); i++) {
+            Tanks t = tk.get(i);
+            if (this.tankLive && t.isTankLive() && this !=t && this.getRec().intersects(t.getRec())){
+                stay();
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -23,7 +23,7 @@ public class TankClients extends Frame {
 
     public TankClients(){
         for (int i = 0; i < 10; i++) {
-           this.nemetanks.add(new Tanks(i*50+10,40,false, Tanks.direction.D,this));
+           this.nemetanks.add(new Tanks(i*70+10,40,false, Tanks.direction.D,this));
         }
     }
     @Override
@@ -45,6 +45,7 @@ public class TankClients extends Frame {
         for (int i = 0; i < nemetanks.size(); i++) {
             Tanks t = nemetanks.get(i);
             t.colliedessWithWall(wall);
+            t.colliedesTanks(nemetanks);
             t.draw(g);
         }
         mytanks.draw(g);
