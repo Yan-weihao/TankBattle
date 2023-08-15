@@ -3,6 +3,7 @@ package TankClient;
 import javax.swing.plaf.PanelUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class Tanks {
     int x , y ;
@@ -14,6 +15,10 @@ public class Tanks {
     public direction dir = direction.STOP;
     public direction ptDir = direction.D;
 
+    public boolean isGood() {
+        return good;
+    }
+
     private boolean good = true;//敌我识别
 
     public boolean isTankLive() {
@@ -24,7 +29,8 @@ public class Tanks {
     }
 
     private boolean tankLive = true;
-
+    private Random rn = new Random(); //产生一个随机数
+    private int slpe = rn.nextInt(12) + 3;
     TankClients tc ;
 
     public Tanks(int x, int y, boolean good) {
@@ -32,14 +38,17 @@ public class Tanks {
         this.y = y;
         this.good = good;
     }
-    public Tanks(int x ,int y,boolean good,TankClients tc){ //持有TC的引用
+    public Tanks(int x ,int y,boolean good,direction dir, TankClients tc){ //持有TC的引用
         this(x, y,good);
         this.tc = tc;
+        this.dir = dir;
     }
 
     public void draw(Graphics g){ //画出一辆坦克
         if(!tankLive) {
-            tc.nemetanks.remove(this);
+            if(!good) {
+                tc.nemetanks.remove(this);
+            }
             return;
         }
         Color c = g.getColor();
@@ -53,7 +62,7 @@ public class Tanks {
         ptDraw(g);
         move();
     }
-    public void ptDraw(Graphics g){
+    public void ptDraw(Graphics g){ //炮筒
         switch (ptDir){
             case L -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x,y+Tanks.HEIGHT/2) ;
             case LU -> g.drawLine(x+Tanks.WIDTH/2,y+Tanks.HEIGHT/2,x,y);
@@ -98,6 +107,18 @@ public class Tanks {
         if (y < 30) y =30;
         if (x > TankClients.WINDOW_WIDTH - Tanks.WIDTH ) x = TankClients.WINDOW_WIDTH - Tanks.WIDTH;
         if (y > TankClients.WINDOW_HEIGHT - Tanks.HEIGHT ) y = TankClients.WINDOW_HEIGHT - Tanks.HEIGHT;
+
+        if (!good){
+            direction [] d = direction.values();
+            if (slpe == 0){
+                slpe =  rn.nextInt(12) + 3;
+                dir = d[rn.nextInt(d.length)];
+            }
+            slpe--;
+            if (rn.nextInt(30) >25){
+                this.fire();
+            }
+        }
     }
 
     public void KeyPressed(KeyEvent e){ //通过键盘控制坦克方向
@@ -134,15 +155,16 @@ public class Tanks {
         else if (bL && !bU && !bR && bD)  dir = direction.LD;
         else if (!bL && !bU && !bR && !bD)  dir = direction.STOP;
     }
-    public void fire(){ //发射炮弹
+    public void fire(){ //
+        if (!tankLive)
+            return;
         int x = this.x + Tanks.WIDTH/2 -Missile.WIDTH/2;
         int y = this.y + Tanks.HEIGHT/2 - Missile.HEIGHT/2 ;
         Missile m;
-        m = new Missile(x,y,ptDir,this.tc);
+        m = new Missile(x,y,ptDir,this.good,this.tc);
         tc.missiles.add(m);
     }
     public Rectangle getRec(){ //
         return new Rectangle(x,y,WIDTH,HEIGHT);
     }
-
 }

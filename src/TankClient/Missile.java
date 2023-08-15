@@ -9,6 +9,7 @@ public class Missile {
     public static final int HEIGHT = 10;
 
     private boolean live = true;
+    private boolean good ;
 
     int x , y ;
     Tanks.direction dir;
@@ -18,9 +19,10 @@ public class Missile {
         this.y = y;
         this.dir = dir;
     }
-    public Missile(int x, int y ,Tanks.direction dir ,TankClients tc){
+    public Missile(int x, int y ,Tanks.direction dir ,boolean good,TankClients tc){
         this(x,y,dir);
         this.tc = tc;
+        this.good = good;
     }
 
     public void draw(Graphics g){ //画出炮弹
@@ -28,7 +30,6 @@ public class Missile {
             tc.missiles.remove(this);
             return;
         }
-
         Color c = g.getColor();
         g.setColor(Color.black);
         g.fillOval(x,y,WIDTH,HEIGHT);
@@ -67,7 +68,7 @@ public class Missile {
     }
 
     public boolean hitTank(Tanks tk){ //打中坦克
-        if (this.getRec().intersects(tk.getRec()) && tk.isTankLive() ){
+        if (this.live && this.getRec().intersects(tk.getRec()) && tk.isTankLive() && (tk.isGood() != good)){
              tk.setTankLive(false);
              this.live =false;
              tc.explodes.add(new Explode(x,y,tc));//爆炸模拟位置

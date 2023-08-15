@@ -13,7 +13,7 @@ public class TankClients extends Frame {
 
     public final static int WINDOW_WIDTH = 800;
     public final static int WINDOW_HEIGHT = 600;
-    Tanks mytanks = new Tanks(50 , 50 , true,this);
+    Tanks mytanks = new Tanks(50 , 50 , true, Tanks.direction.STOP,this);
    ;
     List<Missile> missiles = new ArrayList<>();
     List<Explode> explodes = new ArrayList<>();
@@ -22,7 +22,7 @@ public class TankClients extends Frame {
 
     public TankClients(){
         for (int i = 0; i < 10; i++) {
-           this.nemetanks.add(new Tanks(i*50+10,40,false,this));
+           this.nemetanks.add(new Tanks(i*50+10,40,false, Tanks.direction.D,this));
         }
     }
     @Override
@@ -32,6 +32,7 @@ public class TankClients extends Frame {
         for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
             m.hitTanks(nemetanks);
+            m.hitTank(mytanks);
             m.draw(g);
         }
         for (int i = 0; i < explodes.size(); i++) {
@@ -41,7 +42,6 @@ public class TankClients extends Frame {
 
         for (int i = 0; i < nemetanks.size(); i++) {
             Tanks t = nemetanks.get(i);
-
             t.draw(g);
         }
         mytanks.draw(g);
