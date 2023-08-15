@@ -141,6 +141,7 @@ public class Tanks {
             case KeyEvent.VK_UP -> bU = true;
             case KeyEvent.VK_RIGHT -> bR = true;
             case KeyEvent.VK_DOWN -> bD = true;
+            case KeyEvent.VK_A -> superFire();
         }
         locateDirection();
     }
@@ -176,6 +177,23 @@ public class Tanks {
         Missile m;
         m = new Missile(x,y,ptDir,this.good,this.tc);
         tc.missiles.add(m);
+    }
+    public void fire(direction dir){ //
+        if (!tankLive)
+            return;
+        int x = this.x + Tanks.WIDTH/2 -Missile.WIDTH/2;
+        int y = this.y + Tanks.HEIGHT/2 - Missile.HEIGHT/2 ;
+        Missile m;
+        m = new Missile(x,y,dir,this.good,this.tc);
+        tc.missiles.add(m);
+    }
+
+
+    public void superFire(){
+        direction [] dir = direction.values();
+        for (int i = 0; i < dir.length-1; i++) {
+            fire(dir[i]);
+        }
     }
     public Rectangle getRec(){ //碰撞
         return new Rectangle(x,y,WIDTH,HEIGHT);
