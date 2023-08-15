@@ -19,6 +19,7 @@ public class TankClients extends Frame {
     List<Explode> explodes = new ArrayList<>();
     List<Tanks> nemetanks = new ArrayList<>();
     Wall wall = new Wall(this,400,200,100,200);
+    Blood blood = new Blood();
     Image offScreenImage = null;
 
     public TankClients(){
@@ -50,6 +51,8 @@ public class TankClients extends Frame {
             t.draw(g);
         }
         mytanks.draw(g);
+        blood.draw(g);
+        blood.eta(mytanks);
         wall.draw(g);
     }
 
