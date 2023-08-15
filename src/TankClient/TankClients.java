@@ -13,11 +13,12 @@ public class TankClients extends Frame {
 
     public final static int WINDOW_WIDTH = 800;
     public final static int WINDOW_HEIGHT = 600;
-    Tanks mytanks = new Tanks(50 , 50 , true, Tanks.direction.STOP,this);
-   ;
+    Tanks mytanks = new Tanks(200 , 200 , true, Tanks.direction.STOP,this);
+
     List<Missile> missiles = new ArrayList<>();
     List<Explode> explodes = new ArrayList<>();
     List<Tanks> nemetanks = new ArrayList<>();
+    Wall wall = new Wall(this,400,200,100,200);
     Image offScreenImage = null;
 
     public TankClients(){
@@ -33,6 +34,7 @@ public class TankClients extends Frame {
             Missile m = missiles.get(i);
             m.hitTanks(nemetanks);
             m.hitTank(mytanks);
+            m.hitWall(wall);
             m.draw(g);
         }
         for (int i = 0; i < explodes.size(); i++) {
@@ -42,9 +44,11 @@ public class TankClients extends Frame {
 
         for (int i = 0; i < nemetanks.size(); i++) {
             Tanks t = nemetanks.get(i);
+            t.colliedessWithWall(wall);
             t.draw(g);
         }
         mytanks.draw(g);
+        wall.draw(g);
     }
 
     @Override

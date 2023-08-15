@@ -60,11 +60,9 @@ public class Missile {
             case STOP -> {
             }
         }
-        if (x < 0 || y < 0 || y > TankClients.WINDOW_WIDTH || x >TankClients.WINDOW_HEIGHT){
+        if (x < 0 || y < 0 || x > TankClients.WINDOW_WIDTH || y > TankClients.WINDOW_HEIGHT){
             live =false;
-
         }
-
     }
 
     public boolean hitTank(Tanks tk){ //打中坦克
@@ -82,6 +80,14 @@ public class Missile {
             if (hitTank(tk.get(i))){
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean hitWall(Wall w){
+        if (this.live &&this.getRec().intersects(w.getRec()) ){
+            this.live = false;
+            return true;
         }
         return false;
     }

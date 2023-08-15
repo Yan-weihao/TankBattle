@@ -103,10 +103,12 @@ public class Tanks {
         if(this.dir != direction.STOP){
             this.ptDir = this.dir;
         }
-        if (x < 5) x = 5;
-        if (y < 30) y =30;
-        if (x > TankClients.WINDOW_WIDTH - Tanks.WIDTH ) x = TankClients.WINDOW_WIDTH - Tanks.WIDTH;
-        if (y > TankClients.WINDOW_HEIGHT - Tanks.HEIGHT ) y = TankClients.WINDOW_HEIGHT - Tanks.HEIGHT;
+        //出界处理
+
+        if (x <= 0) x = 0;
+        if (y <= 30) y =30;
+        if (x >= TankClients.WINDOW_WIDTH - Tanks.WIDTH ) x = TankClients.WINDOW_WIDTH - Tanks.WIDTH;
+        if (y >= TankClients.WINDOW_HEIGHT - Tanks.HEIGHT ) y = TankClients.WINDOW_HEIGHT - Tanks.HEIGHT;
 
         if (!good){
             direction [] d = direction.values();
@@ -166,5 +168,13 @@ public class Tanks {
     }
     public Rectangle getRec(){ //
         return new Rectangle(x,y,WIDTH,HEIGHT);
+    }
+    public boolean colliedessWithWall(Wall w){ //坦克撞墙
+        if (this.tankLive && this.getRec().intersects(w.getRec())){
+            direction [] dirs = direction.values();
+            this.dir = dirs[rn.nextInt(dirs.length)];
+            return true;
+        }
+        return false;
     }
 }
